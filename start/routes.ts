@@ -19,7 +19,32 @@
 */
 
 import Route from '@ioc:Adonis/Core/Route'
+import HealthCheck from '@ioc:Adonis/Core/HealthCheck'
 
 Route.get('/', async () => {
   return { hello: 'world' }
 })
+
+Route.get('health', async ({ response }) => {
+  const report = await HealthCheck.getReport()
+
+  return report.healthy ? response.ok(report) : response.badRequest(report)
+})
+
+Route.group(() => {
+  Route.group(() => {
+    Route.get('/', 'UsersController.index')
+  })
+    .middleware('auth')
+    .prefix('/users')
+
+  Route.group(() => {
+    Route.post('/', 'AuthenticationController.signup')
+    Route.post('/login', 'AuthenticationController.login')
+
+    Route.group(() => {
+      Route.post('/logout', 'AuthenticationController.logout')
+      Route.get('/me', 'AuthenticationController.me')
+    }).middleware('auth')
+  }).prefix('/auth')
+}).prefix('v1')
