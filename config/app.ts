@@ -48,7 +48,7 @@ export const http: ServerConfig = {
   | so on.
   |
   */
-  allowMethodSpoofing: false,
+  allowMethodSpoofing: true,
 
   /*
   |--------------------------------------------------------------------------
@@ -104,7 +104,7 @@ export const http: ServerConfig = {
   cookie: {
     domain: '',
     path: '/',
-    maxAge: '2h',
+    maxAge: '1d',
     httpOnly: true,
     secure: false,
     sameSite: false,
