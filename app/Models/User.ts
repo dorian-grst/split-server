@@ -7,9 +7,12 @@ import {
   hasMany,
   HasMany,
   beforeCreate,
+  manyToMany,
+  ManyToMany,
 } from '@ioc:Adonis/Lucid/Orm'
 import Transaction from './Transaction'
 import { randomUUID } from 'node:crypto'
+import Split from './Split'
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
@@ -35,6 +38,9 @@ export default class User extends BaseModel {
 
   @hasMany(() => Transaction)
   public transactions: HasMany<typeof Transaction>
+
+  @manyToMany(() => Split)
+  public splits: ManyToMany<typeof Split>
 
   @beforeSave()
   public static async hashPassword(user: User) {

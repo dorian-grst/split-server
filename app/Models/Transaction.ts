@@ -5,6 +5,8 @@ import {
   BelongsTo,
   belongsTo,
   column,
+  ManyToMany,
+  manyToMany,
 } from '@ioc:Adonis/Lucid/Orm'
 import User from 'App/Models/User'
 import Split from 'App/Models/Split'
@@ -46,6 +48,9 @@ export default class Transaction extends BaseModel {
 
   @belongsTo(() => Split)
   public split: BelongsTo<typeof Split>
+
+  @manyToMany(() => Split)
+  public splits: ManyToMany<typeof Split>
 
   @beforeCreate()
   public static async generateUuid(model: Transaction) {
