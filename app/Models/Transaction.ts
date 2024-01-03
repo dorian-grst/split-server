@@ -43,14 +43,11 @@ export default class Transaction extends BaseModel {
   @belongsTo(() => User)
   public payedBy: BelongsTo<typeof User>
 
-  @belongsTo(() => User)
-  public payedFor: BelongsTo<typeof User>
+  @manyToMany(() => User)
+  public payedFor: ManyToMany<typeof User>
 
   @belongsTo(() => Split)
   public split: BelongsTo<typeof Split>
-
-  @manyToMany(() => Split)
-  public splits: ManyToMany<typeof Split>
 
   @beforeCreate()
   public static async generateUuid(model: Transaction) {

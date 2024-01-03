@@ -26,7 +26,7 @@ export default class TransactionValidator {
   public schema = schema.create({
     title: schema.string({ trim: true }),
     amount: schema.number(),
-    payedBy: schema.string({ trim: true }),
+    payedById: schema.string({ trim: true }),
   })
 
   /**
