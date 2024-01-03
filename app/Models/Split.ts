@@ -10,6 +10,7 @@ import {
 } from '@ioc:Adonis/Lucid/Orm'
 import User from 'App/Models/User'
 import { randomUUID } from 'node:crypto'
+import Transaction from './Transaction'
 
 export default class Split extends BaseModel {
   @column({ isPrimary: true })
@@ -38,6 +39,9 @@ export default class Split extends BaseModel {
 
   @manyToMany(() => User)
   public users: ManyToMany<typeof User>
+
+  @manyToMany(() => Transaction)
+  public transactions: ManyToMany<typeof Transaction>
 
   @beforeCreate()
   public static async generateUuid(model: Split) {

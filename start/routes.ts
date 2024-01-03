@@ -33,13 +33,7 @@ Route.get('health', async ({ response }) => {
 
 Route.group(() => {
   Route.group(() => {
-    Route.get('/', 'UsersController.index')
-  })
-    .middleware('auth')
-    .prefix('/users')
-
-  Route.group(() => {
-    Route.post('/', 'AuthenticationController.signup')
+    Route.post('/signup', 'AuthenticationController.signup')
     Route.post('/login', 'AuthenticationController.login')
 
     Route.group(() => {
@@ -47,4 +41,13 @@ Route.group(() => {
       Route.get('/me', 'AuthenticationController.me')
     }).middleware('auth')
   }).prefix('/auth')
+
+  Route.group(() => {
+    Route.post('/split', 'SplitsController.store')
+    Route.get('/split/:id', 'SplitsController.show')
+    Route.get('/split/:id/transactions', 'SplitsController.transactions')
+    Route.get('/user/:id/splits', 'UsersController.splits')
+    Route.patch('/user/:id', 'UsersController.updateDisplayName')
+    Route.post('/transaction', 'TransactionsController.store')
+  }).middleware('auth')
 }).prefix('v1')
