@@ -37,7 +37,7 @@ export default class AuthenticationController {
   }
 
   public async me({ auth, response }: HttpContextContract) {
-    const user = auth.user as User
+    const user = auth.user
     return response.send(user)
   }
 }
