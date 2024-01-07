@@ -12,5 +12,6 @@ export default class TransactionsController {
       userId: user_id,
     })
     return response.status(200).json({ message: 'Split created successfully', transaction })
+    
   }
 }

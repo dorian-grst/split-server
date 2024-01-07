@@ -27,6 +27,7 @@ export default class TransactionValidator {
     title: schema.string({ trim: true }),
     amount: schema.number(),
     payedById: schema.string({ trim: true }),
+    splitId: schema.string({ trim: true }),
   })
 
   /**

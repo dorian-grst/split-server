@@ -1,4 +1,6 @@
+import Invitation from 'App/Models/Invitation'
 import Split from 'App/Models/Split'
+import Transaction from 'App/Models/Transaction'
 import SplitValidator from 'App/Validators/SplitValidator'
 
 export default class SplitsController {
@@ -19,21 +21,34 @@ export default class SplitsController {
   }
 
   async show({ response, params }) {
-    const split = await Split.query()
-      .where('id', params.id)
-      .preload('users')
-      .preload('transactions')
+    const split = await Split.query().where('id', params.id).preload('users')
     return response.send(split)
   }
 
   async transactions({ params, response }) {
-    try {
-      const split = await Split.findOrFail(params.id)
-      const transactions = await split.related('transactions').query()
-      return response.status(200).json({ transactions })
-    } catch (error) {
-      console.error(error)
-      return response.status(500).json({ message: 'Internal Server Error' })
-    }
+    const transactions = await Transaction.query().where('split_id', params.id).preload('payedBy')
+    return response.send(transactions)
+  }
+
+  async invitations({ params, response }) {
+    const invitations = await Invitation.query().where('split_id', params.id)
+    return response.send(invitations)
+  }
+
+  async join({ auth, request, response }) {
+    const user = auth.user
+    const { token } = request.only(['token'])
+    const invitation = await Invitation.findByOrFail('token', token)
+    await user.related('splits').attach([invitation.splitId])
+    await invitation.delete()
+    return response.status(200).json({ message: 'Invitation accepted successfully' })
+  }
+
+  async updateDisplayName({ params, request, response }) {
+    const split = await Split.findOrFail(params.id)
+    const { displayName } = request.only(['displayName'])
+    split.displayName = displayName
+    await split.merge({ displayName: displayName }).save()
+    return response.status(200).json({ message: 'Displayname updated successfully', split })
   }
 }

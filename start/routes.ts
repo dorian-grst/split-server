@@ -46,8 +46,16 @@ Route.group(() => {
     Route.post('/split', 'SplitsController.store')
     Route.get('/split/:id', 'SplitsController.show')
     Route.get('/split/:id/transactions', 'SplitsController.transactions')
+    Route.get('/split/:id/invitations', 'SplitsController.invitations')
+    Route.post('/split/join', 'SplitsController.join')
+    Route.patch('/split/:id', 'SplitsController.updateDisplayName')
+
     Route.get('/user/:id/splits', 'UsersController.splits')
     Route.patch('/user/:id', 'UsersController.updateDisplayName')
+
     Route.post('/transaction', 'TransactionsController.store')
+
+    Route.post('/split/:id/invitation', 'InvitationsController.store')
+    Route.delete('/split/:id/invitation/:token', 'InvitationsController.delete')
   }).middleware('auth')
 }).prefix('v1')
