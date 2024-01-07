@@ -11,6 +11,7 @@ import {
 import User from 'App/Models/User'
 import { randomUUID } from 'node:crypto'
 import Transaction from './Transaction'
+import Invitation from './Invitation'
 
 export default class Split extends BaseModel {
   @column({ isPrimary: true })
@@ -42,6 +43,9 @@ export default class Split extends BaseModel {
 
   @manyToMany(() => Transaction)
   public transactions: ManyToMany<typeof Transaction>
+
+  @manyToMany(() => Invitation)
+  public invitations: ManyToMany<typeof Invitation>
 
   @beforeCreate()
   public static async generateUuid(model: Split) {

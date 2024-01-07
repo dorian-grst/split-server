@@ -8,7 +8,8 @@ export default class extends BaseSchema {
       table.increments('id')
       table.string('split_id').references('id').inTable('splits').onDelete('CASCADE')
       table.string('transaction_id').references('id').inTable('transactions').onDelete('CASCADE')
-      table.unique(['transaction_id', 'split_id'])
+      table.unique(['split_id', 'transaction_id'])
+
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
        */

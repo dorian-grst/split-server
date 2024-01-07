@@ -40,7 +40,9 @@ export default class Transaction extends BaseModel {
   @belongsTo(() => User)
   public user: BelongsTo<typeof User>
 
-  @belongsTo(() => User)
+  @belongsTo(() => User, {
+    foreignKey: 'payedById',
+  })
   public payedBy: BelongsTo<typeof User>
 
   @manyToMany(() => User)
