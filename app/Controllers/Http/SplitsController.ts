@@ -51,4 +51,12 @@ export default class SplitsController {
     await split.merge({ displayName: displayName }).save()
     return response.status(200).json({ message: 'Displayname updated successfully', split })
   }
+
+  async updateDescription({ params, request, response }) {
+    const split = await Split.findOrFail(params.id)
+    const { description } = request.only(['description'])
+    split.description = description
+    await split.merge({ description: description }).save()
+    return response.status(200).json({ message: 'Description updated successfully', split })
+  }
 }
