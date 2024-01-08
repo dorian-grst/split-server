@@ -56,6 +56,7 @@ Route.group(() => {
     Route.patch('/user/:id', 'UsersController.updateDisplayName')
 
     Route.post('/transaction', 'TransactionsController.store')
+    Route.delete('/transaction/:id/delete', 'TransactionsController.delete')
 
     Route.post('/split/:id/invitation', 'InvitationsController.store')
     Route.delete('/split/:id/invitation/:token', 'InvitationsController.delete')
