@@ -14,8 +14,9 @@ export default class TransactionsController {
     return response.status(200).json({ message: 'Split created successfully', transaction })
   }
 
-  async delete ({ params, response }) {
-    const transaction = await Transaction.findOrFail(params)
+  async delete({ params, response }) {
+    const { id } = params
+    const transaction = await Transaction.findOrFail(id)
     await transaction.delete()
     return response.status(200).json({ message: 'Transaction deleted successfully' })
   }
