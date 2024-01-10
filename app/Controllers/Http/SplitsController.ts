@@ -1,4 +1,5 @@
 import Invitation from 'App/Models/Invitation'
+import Notification from 'App/Models/Notification'
 import Split from 'App/Models/Split'
 import Transaction from 'App/Models/Transaction'
 import SplitValidator from 'App/Validators/SplitValidator'
@@ -35,13 +36,19 @@ export default class SplitsController {
     return response.send(invitations)
   }
 
+  async notifications({ params, response }) {
+    const notifications = await Notification.query().where('split_id', params.id).preload('user')
+    return response.send(notifications)
+  }
+
   async join({ auth, request, response }) {
     const user = auth.user
     const { token } = request.only(['token'])
     const invitation = await Invitation.findByOrFail('token', token)
     await user.related('splits').attach([invitation.splitId])
     await invitation.delete()
-    return response.status(200).json({ message: 'Invitation accepted successfully' })
+    const split = await Split.query().where('id', invitation.splitId)
+    return response.status(200).json({ message: 'Invitation accepted successfully', split })
   }
 
   async updateDisplayName({ params, request, response }) {
