@@ -22,7 +22,13 @@ export default class SplitsController {
   }
 
   async show({ response, params }) {
-    const split = await Split.query().where('id', params.id).preload('users')
+    const split = await Split.query()
+      .where('id', params.id)
+      .preload('users')
+      .preload('transactions', (query) => {
+        query.preload('payedBy')
+        query.preload('payedFor')
+      })
     return response.send(split)
   }
 
