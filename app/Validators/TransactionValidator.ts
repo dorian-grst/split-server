@@ -1,4 +1,4 @@
-import { schema, CustomMessages } from '@ioc:Adonis/Core/Validator'
+import { schema, CustomMessages, rules } from '@ioc:Adonis/Core/Validator'
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
 export default class TransactionValidator {
@@ -28,6 +28,12 @@ export default class TransactionValidator {
     amount: schema.number(),
     payedById: schema.string({ trim: true }),
     splitId: schema.string({ trim: true }),
+    usersIds: schema.array()
+    .members(
+      schema.string({ trim: true }, [
+        rules.exists({ table: 'users', column: 'id' }),
+      ])
+      ),
   })
 
   /**

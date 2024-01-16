@@ -5,6 +5,8 @@ import {
   BelongsTo,
   belongsTo,
   column,
+  HasMany,
+  hasMany,
   ManyToMany,
   manyToMany,
 } from '@ioc:Adonis/Lucid/Orm'
@@ -41,8 +43,8 @@ export default class Split extends BaseModel {
   @manyToMany(() => User)
   public users: ManyToMany<typeof User>
 
-  @manyToMany(() => Transaction)
-  public transactions: ManyToMany<typeof Transaction>
+  @hasMany(() => Transaction)
+  public transactions: HasMany<typeof Transaction>
 
   @manyToMany(() => Invitation)
   public invitations: ManyToMany<typeof Invitation>
