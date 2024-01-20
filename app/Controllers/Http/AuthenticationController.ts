@@ -3,7 +3,7 @@ import User from 'App/Models/User'
 import AuthValidator from 'App/Validators/AuthValidator'
 
 export default class AuthenticationController {
-  public async login({ auth, request, response }: HttpContextContract) {
+  async login({ auth, request, response }: HttpContextContract) {
     const email = request.input('email')
     const password = request.input('password')
     try {
@@ -18,7 +18,7 @@ export default class AuthenticationController {
     }
   }
 
-  public async logout({ auth, response }: HttpContextContract) {
+  async logout({ auth, response }: HttpContextContract) {
     await auth.use('api').revoke()
     response.clearCookie('token')
     return {
@@ -26,7 +26,7 @@ export default class AuthenticationController {
     }
   }
 
-  public async signup({ request, response }: HttpContextContract) {
+  async signup({ request, response }: HttpContextContract) {
     const data = await request.validate(AuthValidator)
     try {
       const user = await User.create(data)
@@ -36,7 +36,7 @@ export default class AuthenticationController {
     }
   }
 
-  public async me({ auth, response }: HttpContextContract) {
+  async me({ auth, response }: HttpContextContract) {
     const user = auth.user
     return response.send(user)
   }

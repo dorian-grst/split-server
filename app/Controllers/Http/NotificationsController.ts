@@ -3,7 +3,7 @@
 import Notification from 'App/Models/Notification'
 
 export default class NotificationsController {
-  public async store({ request }) {
+  async store({ request }) {
     const { userId, splitId } = request.only(['userId', 'splitId'])
     const notification = await Notification.create({
       userId,

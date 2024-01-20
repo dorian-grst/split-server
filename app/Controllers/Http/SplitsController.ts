@@ -57,6 +57,19 @@ export default class SplitsController {
     return response.status(200).json({ message: 'Invitation accepted successfully', split })
   }
 
+  async leave({ auth, params, response }) {
+    const user = auth.user
+    const split = await Split.findOrFail(params.id)
+    await user.related('splits').detach([split.id])
+    return response.status(200).json({ message: 'User left successfully', split })
+  }
+
+  async delete({ params, response }) {
+    const split = await Split.findOrFail(params.id)
+    await split.delete()
+    return response.status(200).json({ message: 'Split deleted successfully' })
+  }
+
   async updateDisplayName({ params, request, response }) {
     const split = await Split.findOrFail(params.id)
     const { displayName } = request.only(['displayName'])

@@ -48,11 +48,14 @@ Route.group(() => {
     Route.get('/split/:id/transactions', 'SplitsController.transactions')
     Route.get('/split/:id/invitations', 'SplitsController.invitations')
     Route.post('/split/join', 'SplitsController.join')
+    Route.delete('/split/:id/leave', 'SplitsController.leave')
+    Route.delete('/split/:id/delete', 'SplitsController.delete')
     Route.patch('/split/:id/displayname', 'SplitsController.updateDisplayName')
     Route.patch('/split/:id/description', 'SplitsController.updateDescription')
 
     Route.get('/user/:id/splits', 'UsersController.splits')
     Route.patch('/user/:id', 'UsersController.updateDisplayName')
+    Route.delete('/user/:id/delete', 'UsersController.delete')
 
     Route.post('/transaction', 'TransactionsController.store')
     Route.delete('/transaction/:id/delete', 'TransactionsController.delete')
