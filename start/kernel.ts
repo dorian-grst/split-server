@@ -24,6 +24,7 @@ Server.middleware.register([
   () => import('@ioc:Adonis/Core/BodyParser'),
   () => import('App/Middleware/SetAuthorizationHeader'),
   () => import('App/Middleware/SilentAuth'),
+  () => import('App/Middleware/Log')
 ])
 
 /*
