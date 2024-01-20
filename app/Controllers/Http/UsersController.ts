@@ -30,8 +30,14 @@ export default class UsersController {
     return response.send(users)
   }
 
-  public async show({ response, params }) {
+  async show({ response, params }) {
     const user = await User.findOrFail(params.id)
     return response.send(user)
+  }
+
+  async delete({ params, response }) {
+    const user = await User.findOrFail(params.id)
+    await user.delete()
+    return response.status(200).json({ message: 'Account deleted successfully' })
   }
 }
